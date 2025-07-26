@@ -59,6 +59,59 @@
     .carousel-item:hover {
       transform: scale(1.05);
     }
+    
+    /* Modal styles for full-size image display */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    .modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.3s ease-in-out;
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    
+    .modal-close:hover {
+      color: #ff6b6b;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes zoomIn {
+      from { transform: scale(0.8); }
+      to { transform: scale(1); }
+    }
   </style>
 </head>
 <body class="text-white bg-cowboys">
@@ -223,6 +276,12 @@
     </div>
   </section>
 
+  <!-- Modal for full-size image display -->
+  <div id="imageModal" class="modal">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" class="modal-content" alt="Full size image">
+  </div>
+
   <script>
     // Magazine Navigation
     let pageIndex = 0;
@@ -289,6 +348,12 @@
         img.src = src.startsWith('http') ? src : `Photos/${src}`;
         img.alt = `Memory ${index + 1}`;
         img.className = 'carousel-item w-80 h-80 object-cover rounded shadow flex-shrink-0 cursor-pointer transition-transform duration-300 hover:scale-105';
+        
+        // Add click event to show full-size image
+        img.addEventListener('click', () => {
+          openModal(img.src, img.alt);
+        });
+        
         carousel.appendChild(img);
       });
     }
@@ -391,6 +456,43 @@
       
       // Start auto-scrolling
       startAutoScroll();
+    });
+
+    // Modal functions
+    function openModal(imageSrc, imageAlt) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      
+      modalImage.src = imageSrc;
+      modalImage.alt = imageAlt;
+      modal.classList.add('show');
+      
+      // Pause auto-scrolling when modal is open
+      isAutoScrolling = false;
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('show');
+      
+      // Resume auto-scrolling when modal is closed
+      setTimeout(() => {
+        isAutoScrolling = true;
+      }, 1000);
+    }
+
+    // Close modal when clicking outside the image
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
     });
   </script>
 </body>
