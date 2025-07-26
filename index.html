@@ -13,6 +13,17 @@
     .bg-cowboys {
       background: linear-gradient(to bottom, #041E42, #869397);
     }
+    .carousel-container {
+      perspective: 1000px;
+    }
+    .carousel-item {
+      transition: transform 0.5s, opacity 0.5s;
+    }
+    .carousel-center {
+      transform: scale(1.2);
+      opacity: 1 !important;
+      z-index: 10;
+    }
   </style>
 </head>
 <body class="text-white bg-cowboys">
@@ -25,139 +36,299 @@
   </section>
 
   <!-- Welcome Message -->
-  <section class="py-12 px-4 bg-white text-black">
-    <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl font-bold sports-font mb-4">Welcome to the Magazine</h2>
-        <p class="text-lg"> Chechi has been working on this magazine for months now and this is so you can show it off to your friends! </p>
-        <link rel="">
+  <section class="bg-gray-100 py-12 px-4 text-black">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold sports-font mb-8">Welcome to the Magazine</h2>
+      <p class="text-lg mb-8">Chechi has been working on this magazine for months now and this is <br>so you can show it off to your friends!</p>
+    
+      <div id="magazine-container" class="relative">
+        <div id="magazine-pages" class="flex transition-all duration-500 ease-in-out">
+          <!-- Pages: first is single -->
+          <div class="flex-shrink-0 w-full md:w-1/2 px-2">
+            <img src="https://placekitten.com/420/600" alt="Page 1" class="rounded shadow mx-auto">
+          </div>
+          <!-- Following are shown two at a time -->
+          <div class="flex-shrink-0 w-full md:w-1/2 px-2">
+            <img src="https://placekitten.com/421/600" alt="Page 2" class="rounded shadow mx-auto">
+          </div>
+          <div class="flex-shrink-0 w-full md:w-1/2 px-2">
+            <img src="https://placekitten.com/422/600" alt="Page 3" class="rounded shadow mx-auto">
+          </div>
+          <div class="flex-shrink-0 w-full md:w-1/2 px-2">
+            <img src="https://placekitten.com/423/600" alt="Page 4" class="rounded shadow mx-auto">
+          </div>
+        </div>
+        <div class="flex justify-between mt-4">
+          <button onclick="prevPage()" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">⬅️ Prev</button>
+          <button onclick="nextPage()" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">Next ➡️</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Video and Audio Messages -->
+  <!-- Video Messages -->
   <section class="bg-gray-900 py-12 px-4">
     <div class="max-w-5xl mx-auto">
       <h2 class="text-3xl font-bold sports-font text-center mb-8">Messages from the Locker Room</h2>
-        <details class="bg-white text-black rounded shadow p-4">
+      <details class="bg-white text-black rounded shadow p-4 mb-8">
         <summary class="cursor-pointer text-xl font-semibold">Click to view videos</summary>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Videos -->
-        <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/21687643-f4c7-4aa3-9967-88ece951610f.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-        <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/a098ce47-e383-4cfa-91bb-8c49af7fd61e.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-        <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/b3b7c28b-7725-4361-b8a3-14708884d4d8.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/f12d16f6-4afe-4ba2-af61-dce04229d958.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/a0dec136-5473-42b4-8e51-2324e652bbb3.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/IMG_5953.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/IMG_7917.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/835ebdc2-4127-4604-8b06-a7b1a64bd610.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/WhatsApp Video 2025-07-25 at 3.28.51 PM.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/4104773a-9b0f-40ed-9ace-4161750935d4.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <!--Landscape Videos-->
-        <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/WhatsApp Video 2025-07-25 at 3.28.33 PM.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
-         <div class="bg-white text-black p-4 rounded shadow">
-          <video controls class="w-full rounded" src="Videos/e19a0d6a-cde9-41ea-8303-cf47fb222e85.mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-          </div>
-    </div>
-  </section>
-   <section class="bg-gray-900 py-12 px-4">
-    <div class="max-w-5xl mx-auto">
-        <details class="bg-white text-black rounded shadow p-4">
-        <summary class="cursor-pointer text-xl font-semibold">Click to view audio message</summary>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Videos -->
-        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          <!-- Videos -->
           <div class="bg-white text-black p-4 rounded shadow">
-          <audio controls class="w-full">
-            <source src="sample-audio.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-          <p class="mt-2 text-center font-semibold">Teammate Tony</p>
-        </div>  
-    
-    
+            <video controls class="w-full rounded" src="Videos/21687643-f4c7-4aa3-9967-88ece951610f.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/a098ce47-e383-4cfa-91bb-8c49af7fd61e.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/b3b7c28b-7725-4361-b8a3-14708884d4d8.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/f12d16f6-4afe-4ba2-af61-dce04229d958.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/a0dec136-5473-42b4-8e51-2324e652bbb3.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/IMG_5953.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/IMG_7917.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/835ebdc2-4127-4604-8b06-a7b1a64bd610.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/WhatsApp Video 2025-07-25 at 3.28.51 PM.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/4104773a-9b0f-40ed-9ace-4161750935d4.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <!--Landscape Videos-->
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/WhatsApp Video 2025-07-25 at 3.28.33 PM.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <div class="bg-white text-black p-4 rounded shadow">
+            <video controls class="w-full rounded" src="Videos/e19a0d6a-cde9-41ea-8303-cf47fb222e85.mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
+      </details>
+      
+      <!-- Audio Messages -->
+      <details class="bg-white text-black rounded shadow p-4">
+        <summary class="cursor-pointer text-xl font-semibold">Click to view audio messages</summary>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          <div class="bg-white text-black p-4 rounded shadow">
+            <audio controls class="w-full">
+              <source src="sample-audio.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <p class="mt-2 text-center font-semibold">Name 1</p>
+          </div>  
+        </div>
+      </details>
     </div>
   </section>
        
-        <!-- Recordings -->
-      
-        <!-- Another Video or Audio -->
-        
-    
-
-  <!-- Photo Gallery -->
-  <!-- <section class="py-12 px-4 bg-white text-black">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="text-3xl font-bold sports-font text-center mb-8">Highlights from a Hall-of-Fame Life</h2>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <img src="https://placekitten.com/300/200" alt="Memory 1" class="rounded shadow hover:scale-105 transition">
-        <img src="https://placekitten.com/301/200" alt="Memory 2" class="rounded shadow hover:scale-105 transition">
-        <img src="https://placekitten.com/302/200" alt="Memory 3" class="rounded shadow hover:scale-105 transition">
-        <img src="https://placekitten.com/303/200" alt="Memory 4" class="rounded shadow hover:scale-105 transition">
-        <img src="https://placekitten.com/304/200" alt="Memory 5" class="rounded shadow hover:scale-105 transition">
-        <img src="https://placekitten.com/305/200" alt="Memory 6" class="rounded shadow hover:scale-105 transition">
+  <!-- Memory Carousel -->
+  <section class="py-12 px-4 bg-gray-800">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold sports-font text-center mb-8">Memory Carousel</h2>
+      <div class="carousel-container overflow-x-auto">
+        <div id="carousel" class="flex space-x-4 px-4 transition-all duration-500 ease-in-out">
+          <!-- Images will be inserted by JS -->
+        </div>
       </div>
     </div>
-  </section> -->
+  </section>
 
+  <script>
+    // Magazine Navigation
+    let pageIndex = 0;
+    const pages = document.getElementById('magazine-pages');
 
+    function updateMagazine() {
+      const offset = pageIndex * 100;
+      pages.style.transform = `translateX(-${offset}%)`;
+    }
 
+    function nextPage() {
+      const maxPages = Math.floor(pages.children.length / 2);
+      if (pageIndex < maxPages) {
+        pageIndex++;
+        updateMagazine();
+      }
+    }
 
+    function prevPage() {
+      if (pageIndex > 0) {
+        pageIndex--;
+        updateMagazine();
+      }
+    }
+    
+    // Utility functions
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Carousel functionality
+    async function fetchImageList() {
+      try {
+        const response = await fetch('Photos/images.json');
+        if (!response.ok) throw new Error('Failed to fetch image list');
+        return await response.json();
+      } catch (error) {
+        console.error('Error loading image list:', error);
+        // Fallback to placeholder images if JSON fails
+        return [
+          'https://picsum.photos/300/200?random=1',
+          'https://picsum.photos/300/200?random=2',
+          'https://picsum.photos/300/200?random=3',
+          'https://picsum.photos/300/200?random=4',
+          'https://picsum.photos/300/200?random=5',
+          'https://picsum.photos/300/200?random=6'
+        ];
+      }
+    }
+
+    async function loadCarouselImages() {
+      const carousel = document.getElementById('carousel');
+      const imageList = await fetchImageList();
+      shuffleArray(imageList);
+
+      imageList.forEach((src, index) => {
+        const img = document.createElement('img');
+        // Check if it's a URL or a local file
+        img.src = src.startsWith('http') ? src : `Photos/${src}`;
+        img.alt = `Memory ${index + 1}`;
+        img.className = 'carousel-item w-60 h-60 object-contain rounded shadow opacity-40 flex-shrink-0';
+        carousel.appendChild(img);
+      });
+
+      updateCenterHighlight();
+    }
+
+    let autoScrollInterval;
+    let isAutoScrolling = true;
+
+    function updateCenterHighlight() {
+      const container = document.getElementById('carousel');
+      const children = container.children;
+      if (children.length === 0) return;
+      
+      const containerRect = container.getBoundingClientRect();
+      const centerX = containerRect.left + containerRect.width / 2;
+
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        const rect = child.getBoundingClientRect();
+        const itemCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(centerX - itemCenter);
+
+        child.classList.remove('carousel-center');
+        child.style.opacity = Math.max(0.3, 1 - distance / 300);
+      }
+
+      let closest = null;
+      let minDist = Infinity;
+      for (let i = 0; i < children.length; i++) {
+        const rect = children[i].getBoundingClientRect();
+        const itemCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(centerX - itemCenter);
+        if (distance < minDist) {
+          closest = children[i];
+          minDist = distance;
+        }
+      }
+
+      if (closest) {
+        closest.classList.add('carousel-center');
+        closest.style.opacity = 1;
+      }
+    }
+
+    function startAutoScroll() {
+      const carousel = document.getElementById('carousel');
+      if (autoScrollInterval) clearInterval(autoScrollInterval);
+      
+      autoScrollInterval = setInterval(() => {
+        if (carousel.children.length > 0 && isAutoScrolling) {
+          const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+          if (carousel.scrollLeft >= maxScroll) {
+            // Reset to beginning when reaching the end
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            carousel.scrollBy({ left: 280, behavior: 'smooth' });
+          }
+        }
+      }, 3000);
+    }
+
+    // Initialize everything when page loads
+    window.addEventListener('load', async () => {
+      await loadCarouselImages();
+      
+      const carousel = document.getElementById('carousel');
+      
+      // Add scroll event listener
+      carousel.addEventListener('scroll', () => {
+        requestAnimationFrame(updateCenterHighlight);
+      });
+      
+      // Pause auto-scroll on hover, resume on mouse leave
+      carousel.addEventListener('mouseenter', () => {
+        isAutoScrolling = false;
+      });
+      
+      carousel.addEventListener('mouseleave', () => {
+        isAutoScrolling = true;
+      });
+      
+      // Start auto-scrolling
+      startAutoScroll();
+    });
+
+    // Handle resize
+    window.addEventListener('resize', updateCenterHighlight);
+  </script>
 </body>
 </html>
