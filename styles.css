@@ -1,0 +1,45 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
+body{
+    background-color: black;
+    
+   
+   
+
+}
+
+.videos{
+    border: 8px solid yellow;
+}
+/* .second_videos_div{
+    border: 8px solid yellow;
+    display: flex;
+} */
+/* .videos{ */
+    /* height: 250px;
+    width: 250px; */
+    /* background-color:rgb(12, 12, 255); */
+/* } */
+#WeddingPhoto{
+    height:250px
+}
+#GradPhoto{
+    height:250px;
+}
+.top_box{
+
+  height: 300px;
+  border: 3px solid white;
+  display:flex;
+  justify-content:center;
+  background-color:blue;
+  /* align-items: center; */
+}
+
+h1 {
+    font-family: "Special Gothic Expanded One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+  
+}

@@ -1,24 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appa's 50th BIrthday</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 50th Birthday, Dad!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <style>
+    .sports-font {
+      font-family: 'Anton', sans-serif;
+    }
+    .bg-cowboys {
+      background: linear-gradient(to bottom, #041E42, #869397);
+    }
+  </style>
 </head>
-<body>
-    <div class="videos_div">
-        <video controls width=200 src="Videos/21687643-f4c7-4aa3-9967-88ece951610f.mp4"></video>
-        <video controls width=200 src="Videos/a098ce47-e383-4cfa-91bb-8c49af7fd61e.mp4"></video>
-        <video controls width=200 src="Videos/b3b7c28b-7725-4361-b8a3-14708884d4d8.mp4"></video>
-        <video controls width=200 src="Videos/e19a0d6a-cde9-41ea-8303-cf47fb222e85.mp4"></video>
-        <video controls width=200 src="Videos/f12d16f6-4afe-4ba2-af61-dce04229d958.mp4"></video>
-        <video controls width=200 src="Videos/a0dec136-5473-42b4-8e51-2324e652bbb3.mp4"></video>
-        <video controls width=200 src="Videos/IMG_5953.mp4"></video>
-        <video controls width=200 src="Videos/IMG_7917.mp4"></video>        
-    </div>    
-    
+<body class="text-white bg-cowboys">
 
+  <!-- Hero Section -->
+  <section class="text-center py-20 px-4 bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/15/AT%26T_Stadium_field.jpg');">
+    <div class="bg-black bg-opacity-60 p-8 rounded">
+      <h1 class="text-5xl sports-font mb-4">Happy 50th Birthday, Dad!</h1>
+      <p class="text-xl">A True Dallas Cowboys Legend</p>
+    </div>
+  </section>
 
+  <!-- Welcome Message -->
+  <section class="py-12 px-4 bg-white text-black">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold sports-font mb-4">Welcome to the Hall of Fame</h2>
+      <p class="text-lg">Today we celebrate a man whose loyalty to the Dallas Cowboys is as strong as his love for family and friends. Dive into the memories, relive the glory, and leave your cheers below!</p>
+    </div>
+  </section>
+
+  <!-- Video and Audio Messages -->
+  <section class="bg-gray-900 py-12 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold sports-font text-center mb-8">Messages from the Locker Room</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Video -->
+        <div class="bg-white text-black p-4 rounded shadow">
+          <video controls class="w-full rounded">
+            <source src="sample-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="mt-2 text-center font-semibold">Coach Mike</p>
+        </div>
+        <!-- Audio -->
+        <div class="bg-white text-black p-4 rounded shadow">
+          <audio controls class="w-full">
+            <source src="sample-audio.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+          <p class="mt-2 text-center font-semibold">Teammate Tony</p>
+        </div>
+        <!-- Another Video or Audio -->
+        <div class="bg-white text-black p-4 rounded shadow">
+          <video controls class="w-full rounded">
+            <source src="sample-video2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="mt-2 text-center font-semibold">Fan Favorite Jake</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Gallery -->
+  <section class="py-12 px-4 bg-white text-black">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold sports-font text-center mb-8">Highlights from a Hall-of-Fame Life</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <img src="https://placekitten.com/300/200" alt="Memory 1" class="rounded shadow hover:scale-105 transition">
+        <img src="https://placekitten.com/301/200" alt="Memory 2" class="rounded shadow hover:scale-105 transition">
+        <img src="https://placekitten.com/302/200" alt="Memory 3" class="rounded shadow hover:scale-105 transition">
+        <img src="https://placekitten.com/303/200" alt="Memory 4" class="rounded shadow hover:scale-105 transition">
+        <img src="https://placekitten.com/304/200" alt="Memory 5" class="rounded shadow hover:scale-105 transition">
+        <img src="https://placekitten.com/305/200" alt="Memory 6" class="rounded shadow hover:scale-105 transition">
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-center text-sm py-6">
+    <p class="sports-font text-lg">Thanks for cheering on 50 years of greatness!</p>
+    <p class="text-gray-400">&copy; 2025 – Powered by Cowboys pride</p>
+  </footer>
 
 </body>
 </html>
