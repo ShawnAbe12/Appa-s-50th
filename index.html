@@ -261,17 +261,6 @@
         <div id="carousel" class="flex gap-6 px-4 transition-all duration-500 ease-in-out overflow-hidden relative z-10">
           <!-- Images will be inserted by JS -->
         </div>
-        <!-- Navigation Arrows -->
-        <button id="carousel-left" class="absolute left-6 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white p-4 rounded-full transition-all duration-300 z-20 shadow-lg hover:shadow-xl hover:scale-110">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-        </button>
-        <button id="carousel-right" class="absolute right-6 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white p-4 rounded-full transition-all duration-300 z-20 shadow-lg hover:shadow-xl hover:scale-110">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </button>
       </div>
     </div>
   </section>
@@ -360,40 +349,33 @@
 
     let autoScrollInterval;
     let isAutoScrolling = true;
-
-    function moveCarousel(direction) {
-      const carousel = document.getElementById('carousel');
-      // Calculate scroll amount based on image width + gap
-      const imageWidth = 320; // w-80 = 320px
-      const gap = 24; // gap-6 = 24px
-      const scrollAmount = imageWidth + gap;
-      
-      if (direction === 'left') {
-        carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-      } else {
-        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      }
-    }
+    let scrollSpeed = 1; // pixels per frame
 
     function startAutoScroll() {
       const carousel = document.getElementById('carousel');
       if (autoScrollInterval) clearInterval(autoScrollInterval);
       
-      autoScrollInterval = setInterval(() => {
+      // Use requestAnimationFrame for smooth continuous scrolling
+      function smoothScroll() {
         if (carousel.children.length > 0 && isAutoScrolling) {
           const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-          if (carousel.scrollLeft >= maxScroll - 10) {
+          
+          if (carousel.scrollLeft >= maxScroll) {
             // Reset to beginning when reaching the end
-            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+            carousel.scrollLeft = 0;
           } else {
-            // Move by exactly one image width + gap
-            const imageWidth = 320;
-            const gap = 24;
-            const scrollAmount = imageWidth + gap;
-            carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            // Move continuously by scrollSpeed pixels
+            carousel.scrollLeft += scrollSpeed;
           }
         }
-      }, 3000);
+        
+        if (isAutoScrolling) {
+          requestAnimationFrame(smoothScroll);
+        }
+      }
+      
+      // Start the smooth scrolling
+      requestAnimationFrame(smoothScroll);
     }
 
     // Initialize everything when page loads
@@ -401,49 +383,6 @@
       await loadCarouselImages();
       
       const carousel = document.getElementById('carousel');
-      const leftArrow = document.getElementById('carousel-left');
-      const rightArrow = document.getElementById('carousel-right');
-      
-      // Add click listeners for arrows
-      leftArrow.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        isAutoScrolling = false;
-        
-        // Check if we're at the beginning, if so, go to the end
-        if (carousel.scrollLeft <= 0) {
-          const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-          carousel.scrollTo({ left: maxScroll, behavior: 'smooth' });
-        } else {
-          moveCarousel('left');
-        }
-        
-        setTimeout(() => { 
-          if (!carousel.matches(':hover')) {
-            isAutoScrolling = true; 
-          }
-        }, 5000);
-      });
-      
-      rightArrow.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        isAutoScrolling = false;
-        
-        // Check if we're at the end, if so, go to the beginning
-        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-        if (carousel.scrollLeft >= maxScroll - 10) {
-          carousel.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          moveCarousel('right');
-        }
-        
-        setTimeout(() => { 
-          if (!carousel.matches(':hover')) {
-            isAutoScrolling = true; 
-          }
-        }, 5000);
-      });
       
       // Pause auto-scroll on hover, resume on mouse leave
       carousel.addEventListener('mouseenter', () => {
@@ -452,10 +391,14 @@
       
       carousel.addEventListener('mouseleave', () => {
         isAutoScrolling = true;
+        startAutoScroll();
       });
       
       // Start auto-scrolling
       startAutoScroll();
+      
+      // Setup visibility observer to pause when off-screen
+      setupVisibilityObserver();
     });
 
     // Modal functions
@@ -478,7 +421,32 @@
       // Resume auto-scrolling when modal is closed
       setTimeout(() => {
         isAutoScrolling = true;
-      }, 1000);
+        startAutoScroll();
+      }, 500);
+    }
+
+    // Add Intersection Observer to pause when carousel is off-screen
+    function setupVisibilityObserver() {
+      const carousel = document.getElementById('carousel');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Carousel is visible, resume auto-scroll if not hovered
+            if (!carousel.matches(':hover')) {
+              isAutoScrolling = true;
+              startAutoScroll();
+            }
+          } else {
+            // Carousel is off-screen, pause auto-scroll
+            isAutoScrolling = false;
+          }
+        });
+      }, {
+        threshold: 0.1 // Trigger when at least 10% of carousel is visible
+      });
+      
+      observer.observe(carousel);
     }
 
     // Close modal when clicking outside the image
