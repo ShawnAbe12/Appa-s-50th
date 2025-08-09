@@ -54,7 +54,7 @@
     }
     .carousel-item {
       transition: transform 0.3s;
-      opacity: 1 !important; /* Force full opacity */
+      opacity: 1 !important;
     }
     .carousel-item:hover {
       transform: scale(1.05);
@@ -112,6 +112,45 @@
       from { transform: scale(0.8); }
       to { transform: scale(1); }
     }
+
+    /* Error handling styles */
+    .error-message {
+      color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .loading-message {
+      color: #4299e1;
+      background: rgba(66, 153, 225, 0.1);
+      border: 1px solid rgba(66, 153, 225, 0.3);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      .carousel-item {
+        width: 250px;
+        height: 250px;
+      }
+      
+      .modal-content {
+        max-width: 95%;
+        max-height: 80%;
+      }
+      
+      .modal-close {
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+      }
+    }
   </style>
 </head>
 <body class="text-white bg-cowboys">
@@ -131,23 +170,13 @@
     
       <div id="magazine-container" class="relative">
         <div id="magazine-pages" class="flex transition-all duration-500 ease-in-out">
-          <!-- Pages: first is single -->
+          <!-- Magazine pages will be loaded here -->
           <div class="flex-shrink-0 w-full md:w-1/2 px-2">
-            <img src="https://placekitten.com/420/600" alt="Page 1" class="rounded shadow mx-auto">
-          </div>
-          <!-- Following are shown two at a time -->
-          <div class="flex-shrink-0 w-full md:w-1/2 px-2">
-            <img src="https://placekitten.com/421/600" alt="Page 2" class="rounded shadow mx-auto">
-          </div>
-          <div class="flex-shrink-0 w-full md:w-1/2 px-2">
-            <img src="https://placekitten.com/422/600" alt="Page 3" class="rounded shadow mx-auto">
-          </div>
-          <div class="flex-shrink-0 w-full md:w-1/2 px-2">
-            <img src="https://placekitten.com/423/600" alt="Page 4" class="rounded shadow mx-auto">
+            <div class="loading-message">Loading magazine pages...</div>
           </div>
         </div>
         <div class="flex justify-between mt-4">
-          <button onclick="prevPage()" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">⬅️ Prev</button>
+          <button onclick="prevPage()" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 disabled:opacity-50" disabled>⬅️ Prev</button>
           <button onclick="nextPage()" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">Next ➡️</button>
         </div>
       </div>
@@ -160,94 +189,16 @@
       <h2 class="text-3xl font-bold sports-font text-center mb-8">Messages from the Locker Room</h2>
       <details class="bg-white text-black rounded shadow p-4 mb-8">
         <summary class="cursor-pointer text-xl font-semibold">Click to view videos</summary>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          <!-- Videos -->
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/21687643-f4c7-4aa3-9967-88ece951610f.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/a098ce47-e383-4cfa-91bb-8c49af7fd61e.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/b3b7c28b-7725-4361-b8a3-14708884d4d8.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/f12d16f6-4afe-4ba2-af61-dce04229d958.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/a0dec136-5473-42b4-8e51-2324e652bbb3.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/IMG_5953.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/IMG_7917.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/835ebdc2-4127-4604-8b06-a7b1a64bd610.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/WhatsApp Video 2025-07-25 at 3.28.51 PM.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/4104773a-9b0f-40ed-9ace-4161750935d4.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          
-          <!--Landscape Videos-->
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/WhatsApp Video 2025-07-25 at 3.28.33 PM.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <div class="bg-white text-black p-4 rounded shadow">
-            <video controls class="w-full rounded" src="Videos/e19a0d6a-cde9-41ea-8303-cf47fb222e85.mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
+        <div id="video-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          <div class="loading-message text-white bg-gray-700">Loading videos...</div>
         </div>
       </details>
       
       <!-- Audio Messages -->
       <details class="bg-white text-black rounded shadow p-4">
         <summary class="cursor-pointer text-xl font-semibold">Click to view audio messages</summary>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          <div class="bg-white text-black p-4 rounded shadow">
-            <audio controls class="w-full">
-              <source src="sample-audio.mp3" type="audio/mpeg">
-              Your browser does not support the audio element.
-            </audio>
-            <p class="mt-2 text-center font-semibold">Name 1</p>
-          </div>  
+        <div id="audio-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          <div class="loading-message">Loading audio messages...</div>
         </div>
       </details>
     </div>
@@ -259,7 +210,7 @@
       <h2 class="text-3xl font-bold sports-font text-center mb-8">Memory Carousel</h2>
       <div class="relative carousel-container">
         <div id="carousel" class="flex gap-6 px-4 transition-all duration-500 ease-in-out overflow-hidden relative z-10">
-          <!-- Images will be inserted by JS -->
+          <div class="loading-message">Loading memories...</div>
         </div>
       </div>
     </div>
@@ -272,18 +223,94 @@
   </div>
 
   <script>
+    // Configuration - Update these paths based on your GitHub Pages structure
+    const CONFIG = {
+      magazinePages: [
+        'magazine-page-1.jpg',
+        'magazine-page-2.jpg', 
+        'magazine-page-3.jpg',
+        'magazine-page-4.jpg'
+      ],
+      videoPaths: [
+        'Videos/21687643-f4c7-4aa3-9967-88ece951610f.mp4',
+        'Videos/a098ce47-e383-4cfa-91bb-8c49af7fd61e.mp4',
+        'Videos/b3b7c28b-7725-4361-b8a3-14708884d4d8.mp4',
+        'Videos/f12d16f6-4afe-4ba2-af61-dce04229d958.mp4',
+        'Videos/a0dec136-5473-42b4-8e51-2324e652bbb3.mp4',
+        'Videos/IMG_5953.mp4',
+        'Videos/IMG_7917.mp4',
+        'Videos/835ebdc2-4127-4604-8b06-a7b1a64bd610.mp4',
+        'Videos/WhatsApp Video 2025-07-25 at 3.28.51 PM.mp4',
+        'Videos/4104773a-9b0f-40ed-9ace-4161750935d4.mp4',
+        'Videos/WhatsApp Video 2025-07-25 at 3.28.33 PM.mp4',
+        'Videos/e19a0d6a-cde9-41ea-8303-cf47fb222e85.mp4'
+      ],
+      audioPaths: [
+        'Audio/sample-audio.mp3'
+      ]
+    };
+
     // Magazine Navigation
     let pageIndex = 0;
-    const pages = document.getElementById('magazine-pages');
+    let totalPages = 0;
+
+    async function loadMagazinePages() {
+      const pagesContainer = document.getElementById('magazine-pages');
+      const prevBtn = document.querySelector('button[onclick="prevPage()"]');
+      const nextBtn = document.querySelector('button[onclick="nextPage()"]');
+      
+      try {
+        pagesContainer.innerHTML = '';
+        
+        // Load magazine pages
+        for (let i = 0; i < CONFIG.magazinePages.length; i++) {
+          const pageDiv = document.createElement('div');
+          pageDiv.className = 'flex-shrink-0 w-full md:w-1/2 px-2';
+          
+          const img = document.createElement('img');
+          img.src = CONFIG.magazinePages[i];
+          img.alt = `Page ${i + 1}`;
+          img.className = 'rounded shadow mx-auto cursor-pointer hover:opacity-90 transition-opacity';
+          img.onerror = () => {
+            // Fallback to placeholder if image fails to load
+            img.src = `https://via.placeholder.com/420x600/cccccc/666666?text=Page+${i + 1}`;
+          };
+          
+          // Add click to enlarge functionality
+          img.addEventListener('click', () => {
+            openModal(img.src, img.alt);
+          });
+          
+          pageDiv.appendChild(img);
+          pagesContainer.appendChild(pageDiv);
+        }
+        
+        totalPages = Math.max(0, CONFIG.magazinePages.length - 1);
+        updateMagazineButtons();
+        
+      } catch (error) {
+        console.error('Error loading magazine pages:', error);
+        pagesContainer.innerHTML = '<div class="error-message">Failed to load magazine pages</div>';
+      }
+    }
 
     function updateMagazine() {
+      const pages = document.getElementById('magazine-pages');
       const offset = pageIndex * 100;
       pages.style.transform = `translateX(-${offset}%)`;
+      updateMagazineButtons();
+    }
+
+    function updateMagazineButtons() {
+      const prevBtn = document.querySelector('button[onclick="prevPage()"]');
+      const nextBtn = document.querySelector('button[onclick="nextPage()"]');
+      
+      prevBtn.disabled = pageIndex === 0;
+      nextBtn.disabled = pageIndex >= totalPages;
     }
 
     function nextPage() {
-      const maxPages = Math.floor(pages.children.length / 2);
-      if (pageIndex < maxPages) {
+      if (pageIndex < totalPages) {
         pageIndex++;
         updateMagazine();
       }
@@ -295,6 +322,76 @@
         updateMagazine();
       }
     }
+
+    // Video loading
+    async function loadVideos() {
+      const container = document.getElementById('video-container');
+      
+      try {
+        container.innerHTML = '';
+        
+        for (const videoPath of CONFIG.videoPaths) {
+          const videoDiv = document.createElement('div');
+          videoDiv.className = 'bg-white text-black p-4 rounded shadow';
+          
+          const video = document.createElement('video');
+          video.controls = true;
+          video.className = 'w-full rounded';
+          video.src = videoPath;
+          video.onerror = () => {
+            videoDiv.innerHTML = `<div class="error-message">Video not found: ${videoPath.split('/').pop()}</div>`;
+          };
+          
+          videoDiv.appendChild(video);
+          container.appendChild(videoDiv);
+        }
+        
+      } catch (error) {
+        console.error('Error loading videos:', error);
+        container.innerHTML = '<div class="error-message">Failed to load videos</div>';
+      }
+    }
+
+    // Audio loading
+    async function loadAudio() {
+      const container = document.getElementById('audio-container');
+      
+      try {
+        container.innerHTML = '';
+        
+        for (let i = 0; i < CONFIG.audioPaths.length; i++) {
+          const audioDiv = document.createElement('div');
+          audioDiv.className = 'bg-white text-black p-4 rounded shadow';
+          
+          const audio = document.createElement('audio');
+          audio.controls = true;
+          audio.className = 'w-full';
+          
+          const source = document.createElement('source');
+          source.src = CONFIG.audioPaths[i];
+          source.type = 'audio/mpeg';
+          
+          audio.appendChild(source);
+          audio.innerHTML += 'Your browser does not support the audio element.';
+          
+          const nameP = document.createElement('p');
+          nameP.className = 'mt-2 text-center font-semibold';
+          nameP.textContent = `Audio Message ${i + 1}`;
+          
+          audio.onerror = () => {
+            audioDiv.innerHTML = `<div class="error-message">Audio not found: ${CONFIG.audioPaths[i].split('/').pop()}</div>`;
+          };
+          
+          audioDiv.appendChild(audio);
+          audioDiv.appendChild(nameP);
+          container.appendChild(audioDiv);
+        }
+        
+      } catch (error) {
+        console.error('Error loading audio:', error);
+        container.innerHTML = '<div class="error-message">Failed to load audio files</div>';
+      }
+    }
     
     // Utility functions
     function shuffleArray(array) {
@@ -304,7 +401,7 @@
       }
     }
 
-    // Carousel functionality
+    // Carousel functionality with better error handling
     async function fetchImageList() {
       try {
         const response = await fetch('Photos/images.json');
@@ -312,7 +409,7 @@
         return await response.json();
       } catch (error) {
         console.error('Error loading image list:', error);
-        // Fallback to placeholder images if JSON fails
+        // Enhanced fallback with more placeholder images
         return [
           'https://picsum.photos/300/200?random=1',
           'https://picsum.photos/300/200?random=2',
@@ -321,50 +418,67 @@
           'https://picsum.photos/300/200?random=5',
           'https://picsum.photos/300/200?random=6',
           'https://picsum.photos/300/200?random=7',
-          'https://picsum.photos/300/200?random=8'
+          'https://picsum.photos/300/200?random=8',
+          'https://picsum.photos/300/200?random=9',
+          'https://picsum.photos/300/200?random=10',
+          'https://picsum.photos/300/200?random=11',
+          'https://picsum.photos/300/200?random=12'
         ];
       }
     }
 
     async function loadCarouselImages() {
       const carousel = document.getElementById('carousel');
-      const imageList = await fetchImageList();
-      shuffleArray(imageList);
-
-      imageList.forEach((src, index) => {
-        const img = document.createElement('img');
-        // Check if it's a URL or a local file
-        img.src = src.startsWith('http') ? src : `Photos/${src}`;
-        img.alt = `Memory ${index + 1}`;
-        img.className = 'carousel-item w-80 h-80 object-cover rounded shadow flex-shrink-0 cursor-pointer transition-transform duration-300 hover:scale-105';
+      
+      try {
+        carousel.innerHTML = '<div class="loading-message">Loading memories...</div>';
         
-        // Add click event to show full-size image
-        img.addEventListener('click', () => {
-          openModal(img.src, img.alt);
+        const imageList = await fetchImageList();
+        shuffleArray(imageList);
+
+        carousel.innerHTML = '';
+
+        imageList.forEach((src, index) => {
+          const img = document.createElement('img');
+          // Check if it's a URL or a local file
+          img.src = src.startsWith('http') ? src : `Photos/${src}`;
+          img.alt = `Memory ${index + 1}`;
+          img.className = 'carousel-item w-80 h-80 object-cover rounded shadow flex-shrink-0 cursor-pointer transition-transform duration-300 hover:scale-105';
+          
+          // Add error handling for individual images
+          img.onerror = () => {
+            img.src = `https://via.placeholder.com/320x320/cccccc/666666?text=Memory+${index + 1}`;
+          };
+          
+          // Add click event to show full-size image
+          img.addEventListener('click', () => {
+            openModal(img.src, img.alt);
+          });
+          
+          carousel.appendChild(img);
         });
         
-        carousel.appendChild(img);
-      });
+      } catch (error) {
+        console.error('Error loading carousel:', error);
+        carousel.innerHTML = '<div class="error-message">Failed to load photo memories</div>';
+      }
     }
 
     let autoScrollInterval;
     let isAutoScrolling = true;
-    let scrollSpeed = 1; // pixels per frame
+    let scrollSpeed = 1;
 
     function startAutoScroll() {
       const carousel = document.getElementById('carousel');
       if (autoScrollInterval) clearInterval(autoScrollInterval);
       
-      // Use requestAnimationFrame for smooth continuous scrolling
       function smoothScroll() {
         if (carousel.children.length > 0 && isAutoScrolling) {
           const maxScroll = carousel.scrollWidth - carousel.clientWidth;
           
           if (carousel.scrollLeft >= maxScroll) {
-            // Reset to beginning when reaching the end
             carousel.scrollLeft = 0;
           } else {
-            // Move continuously by scrollSpeed pixels
             carousel.scrollLeft += scrollSpeed;
           }
         }
@@ -374,17 +488,22 @@
         }
       }
       
-      // Start the smooth scrolling
       requestAnimationFrame(smoothScroll);
     }
 
     // Initialize everything when page loads
     window.addEventListener('load', async () => {
-      await loadCarouselImages();
+      // Load all content
+      await Promise.all([
+        loadMagazinePages(),
+        loadVideos(),
+        loadAudio(),
+        loadCarouselImages()
+      ]);
       
       const carousel = document.getElementById('carousel');
       
-      // Pause auto-scroll on hover, resume on mouse leave
+      // Setup carousel interactions
       carousel.addEventListener('mouseenter', () => {
         isAutoScrolling = false;
       });
@@ -397,7 +516,7 @@
       // Start auto-scrolling
       startAutoScroll();
       
-      // Setup visibility observer to pause when off-screen
+      // Setup visibility observer
       setupVisibilityObserver();
     });
 
@@ -410,7 +529,6 @@
       modalImage.alt = imageAlt;
       modal.classList.add('show');
       
-      // Pause auto-scrolling when modal is open
       isAutoScrolling = false;
     }
 
@@ -418,45 +536,40 @@
       const modal = document.getElementById('imageModal');
       modal.classList.remove('show');
       
-      // Resume auto-scrolling when modal is closed
       setTimeout(() => {
         isAutoScrolling = true;
         startAutoScroll();
       }, 500);
     }
 
-    // Add Intersection Observer to pause when carousel is off-screen
     function setupVisibilityObserver() {
       const carousel = document.getElementById('carousel');
       
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Carousel is visible, resume auto-scroll if not hovered
             if (!carousel.matches(':hover')) {
               isAutoScrolling = true;
               startAutoScroll();
             }
           } else {
-            // Carousel is off-screen, pause auto-scroll
             isAutoScrolling = false;
           }
         });
       }, {
-        threshold: 0.1 // Trigger when at least 10% of carousel is visible
+        threshold: 0.1
       });
       
       observer.observe(carousel);
     }
 
-    // Close modal when clicking outside the image
+    // Modal event listeners
     document.getElementById('imageModal').addEventListener('click', function(e) {
       if (e.target === this) {
         closeModal();
       }
     });
 
-    // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeModal();
