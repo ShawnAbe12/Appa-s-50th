@@ -339,6 +339,50 @@
       border-radius: 10px;
       border: 1px solid rgba(139, 69, 19, 0.3);
     }
+
+    /* Fullscreen styles */
+    .magazine-book.fullscreen-active,
+    .magazine-book:fullscreen {
+      width: 90vw;
+      height: 90vh;
+      max-width: none;
+      max-height: none;
+      background: #2d3748;
+      padding: 20px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .magazine-book:fullscreen .book-container,
+    .magazine-book.fullscreen-active .book-container {
+      width: 100%;
+      height: 100%;
+      max-width: 1200px;
+      max-height: 800px;
+    }
+
+    /* Fullscreen page styling */
+    .magazine-book:fullscreen .book-page,
+    .magazine-book.fullscreen-active .book-page {
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset -5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .magazine-book:fullscreen .book-page.left-page,
+    .magazine-book.fullscreen-active .book-page.left-page {
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Hide page numbers in fullscreen for cleaner look */
+    .magazine-book:fullscreen .page-number,
+    .magazine-book.fullscreen-active .page-number {
+      display: none;
+    }
   </style>
 </head>
 <body class="text-white bg-cowboys">
@@ -356,9 +400,10 @@
       <h2 class="text-3xl font-bold sports-font mb-8">Welcome to the Magazine</h2>
       <p class="text-lg mb-8">Chechi has been working on this magazine for months now and this is <br>so you can show it off to your friends!</p>
     
-      <div class="book-instructions">
-        <p class="text-lg font-semibold mb-2">📖 Interactive Magazine</p>
+      <!-- <div class="book-instructions"> -->
+        <!-- <p class="text-lg font-semibold mb-2">📖 Interactive Magazine</p>
         <p>Click on the right page to turn forward • Click on the left page to turn backward • Use the buttons below for navigation</p>
+        <p class="text-sm text-gray-600 mt-1">The magazine will automatically return to the beginning when you reach the end!</p> -->
       </div>
 
       <div class="magazine-book">
@@ -376,7 +421,7 @@
       <div class="book-controls">
         <button id="prev-btn" class="book-btn" onclick="previousPage()" disabled>← Previous</button>
         <button id="next-btn" class="book-btn" onclick="nextPage()">Next →</button>
-        <button id="fullscreen-btn" class="book-btn" onclick="toggleFullscreen()">📖 Fullscreen</button>
+        <!-- <button id="fullscreen-btn" class="book-btn" onclick="toggleFullscreen()">📖 Fullscreen</button> -->
       </div>
 
       <div class="mt-4 text-center">
@@ -505,9 +550,12 @@
       page.className = `book-page ${position}`;
       page.dataset.pageIndex = pageIndex;
       
-      // Add hover effects
-      if (position === 'right-page' && pageIndex + 1 < totalPages) {
-        page.classList.add('can-flip-right');
+      // Add hover effects based on navigation possibilities
+      if (position === 'right-page') {
+        if (pageIndex + 1 < totalPages || currentPage + 2 >= totalPages) {
+          // Can flip forward or loop back to start
+          page.classList.add('can-flip-right');
+        }
       }
       if (position === 'left-page' && pageIndex > 0) {
         page.classList.add('can-flip-left');
@@ -568,6 +616,41 @@
             updateBookControls();
           }, 400);
         }
+      } else if (currentPage + 1 < totalPages) {
+        // Handle last single page
+        const rightPage = document.querySelector('.book-page.right-page');
+        if (rightPage) {
+          rightPage.style.transform = 'rotateY(-180deg)';
+          rightPage.style.zIndex = '10';
+          
+          setTimeout(() => {
+            currentPage += 1;
+            createBookPages();
+            updateBookControls();
+          }, 400);
+        }
+      } else {
+        // At the end - return to start with special animation
+        const rightPage = document.querySelector('.book-page.right-page');
+        const leftPage = document.querySelector('.book-page.left-page');
+        
+        if (rightPage) {
+          rightPage.style.transform = 'rotateY(-180deg)';
+          rightPage.style.zIndex = '10';
+        }
+        if (leftPage) {
+          leftPage.style.transform = 'rotateY(180deg)';
+          leftPage.style.zIndex = '9';
+        }
+        
+        setTimeout(() => {
+          currentPage = 0;
+          createBookPages();
+          updateBookControls();
+          
+          // Show a brief message
+          showReturnMessage();
+        }, 600);
       }
     }
 
@@ -596,29 +679,68 @@
       
       // Update buttons
       prevBtn.disabled = currentPage === 0;
-      nextBtn.disabled = currentPage + 2 >= totalPages;
+      // Always enable next button - it will loop back to start at the end
+      nextBtn.disabled = false;
       
       // Update progress bar
       const progress = ((currentPage + 1) / totalPages) * 100;
       progressBar.style.width = `${progress}%`;
       
       // Update page counter
-      const currentSpread = Math.floor(currentPage / 2) + 1;
-      const totalSpreads = Math.ceil(totalPages / 2);
-      pageCounter.textContent = `Pages ${currentPage + 1}-${Math.min(currentPage + 2, totalPages)} of ${totalPages}`;
-    }
-
-    function toggleFullscreen() {
-      const magazineSection = document.querySelector('.bg-gray-100');
-      
-      if (!document.fullscreenElement) {
-        magazineSection.requestFullscreen().catch(err => {
-          console.log('Error attempting to enable fullscreen:', err);
-        });
+      if (currentPage + 1 < totalPages) {
+        pageCounter.textContent = `Pages ${currentPage + 1}-${Math.min(currentPage + 2, totalPages)} of ${totalPages}`;
       } else {
-        document.exitFullscreen();
+        pageCounter.textContent = `Page ${currentPage + 1} of ${totalPages}`;
       }
     }
+
+    function showReturnMessage() {
+      const bookContainer = document.getElementById('book-container');
+      
+      // Create a temporary message overlay
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg z-20';
+      messageDiv.innerHTML = `
+        <div class="bg-white text-black p-6 rounded-lg text-center">
+          <h3 class="text-xl font-bold mb-2">📖 Back to the Beginning!</h3>
+          <p class="text-gray-600">The magazine has returned to page 1</p>
+        </div>
+      `;
+      
+      bookContainer.appendChild(messageDiv);
+      
+      // Remove message after 2 seconds
+      setTimeout(() => {
+        if (messageDiv.parentNode) {
+          messageDiv.parentNode.removeChild(messageDiv);
+        }
+      }, 2000);
+    }
+      const magazineBook = document.querySelector('.magazine-book');
+      
+      if (!document.fullscreenElement) {
+        // Try different fullscreen methods for browser compatibility
+        if (magazineBook.requestFullscreen) {
+          magazineBook.requestFullscreen();
+        } else if (magazineBook.webkitRequestFullscreen) {
+          magazineBook.webkitRequestFullscreen();
+        } else if (magazineBook.mozRequestFullScreen) {
+          magazineBook.mozRequestFullScreen();
+        } else if (magazineBook.msRequestFullscreen) {
+          magazineBook.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+      }
+    
 
     // Video loading
     async function loadVideos() {
@@ -709,4 +831,162 @@
           // Add click event to show full-size image
           img.addEventListener('click', () => {
             openModal(img.src, img.alt);
+          });
           
+          carousel.appendChild(img);
+        });
+        
+      } catch (error) {
+        console.error('Error loading carousel:', error);
+        carousel.innerHTML = '<div class="error-message">Failed to load photo memories</div>';
+      }
+    }
+
+    let autoScrollInterval;
+    let isAutoScrolling = true;
+    let scrollSpeed = 1;
+
+    function startAutoScroll() {
+      const carousel = document.getElementById('carousel');
+      if (autoScrollInterval) clearInterval(autoScrollInterval);
+      
+      function smoothScroll() {
+        if (carousel.children.length > 0 && isAutoScrolling) {
+          const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+          
+          if (carousel.scrollLeft >= maxScroll) {
+            carousel.scrollLeft = 0;
+          } else {
+            carousel.scrollLeft += scrollSpeed;
+          }
+        }
+        
+        if (isAutoScrolling) {
+          requestAnimationFrame(smoothScroll);
+        }
+      }
+      
+      requestAnimationFrame(smoothScroll);
+    }
+
+    // Initialize everything when page loads
+    window.addEventListener('load', async () => {
+      // Load all content
+      await Promise.all([
+        loadMagazineBook(),
+        loadVideos(),
+        loadCarouselImages()
+      ]);
+      
+      const carousel = document.getElementById('carousel');
+      
+      // Setup carousel interactions
+      carousel.addEventListener('mouseenter', () => {
+        isAutoScrolling = false;
+      });
+      
+      carousel.addEventListener('mouseleave', () => {
+        isAutoScrolling = true;
+        startAutoScroll();
+      });
+      
+      // Start auto-scrolling
+      startAutoScroll();
+      
+      // Setup visibility observer
+      setupVisibilityObserver();
+      
+      // Setup fullscreen event listeners
+      setupFullscreenListeners();
+    });
+
+    function setupFullscreenListeners() {
+      const magazineBook = document.querySelector('.magazine-book');
+      
+      // Listen for fullscreen changes
+      document.addEventListener('fullscreenchange', handleFullscreenChange);
+      document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+      
+      function handleFullscreenChange() {
+        if (!document.fullscreenElement && 
+            !document.webkitFullscreenElement && 
+            !document.mozFullScreenElement && 
+            !document.msFullscreenElement) {
+          // Exited fullscreen
+          magazineBook.classList.remove('fullscreen-active');
+        } else {
+          // Entered fullscreen
+          magazineBook.classList.add('fullscreen-active');
+        }
+      }
+    }
+
+    // Modal functions
+    function openModal(imageSrc, imageAlt) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      
+      modalImage.src = imageSrc;
+      modalImage.alt = imageAlt;
+      modal.classList.add('show');
+      
+      isAutoScrolling = false;
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('show');
+      
+      setTimeout(() => {
+        isAutoScrolling = true;
+        startAutoScroll();
+      }, 500);
+    }
+
+    function setupVisibilityObserver() {
+      const carousel = document.getElementById('carousel');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!carousel.matches(':hover')) {
+              isAutoScrolling = true;
+              startAutoScroll();
+            }
+          } else {
+            isAutoScrolling = false;
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+      
+      observer.observe(carousel);
+    }
+
+    // Modal event listeners
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+      // Add keyboard navigation for book
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextPage();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        previousPage();
+      }
+    });
+  </script>
+</body>
+</html>
