@@ -7,7 +7,7 @@ import json
 # # Convert to a JSON-formatted string (which uses double quotes)
 # print(json.dumps(file_list, indent=2))
 arr = []
-for i in range(1,29):
-    arr.append("MagazinePages/starting("+str(i)+").jpg")
+for i in range(1,89):
+    arr.append("MagazinePages/"+str(i)+".jpg")
 
 print(arr)
